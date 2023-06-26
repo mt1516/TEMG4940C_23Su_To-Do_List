@@ -8,7 +8,7 @@ const Card = ({ card, onDeleteCard, onEditCard }) => {
   const handleDelete = () => {
     onDeleteCard(card.id);
   };
-
+  
   const handleEdit = () => {
     setIsEditing(true);
   };
