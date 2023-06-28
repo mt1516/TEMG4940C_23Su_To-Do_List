@@ -1,4 +1,47 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+
+const CardView = styled.div`
+  background-color: #ffffff;
+  padding: 1rem;
+  margin-bottom: 1rem;
+`;
+
+const CardDetails = styled.div`
+  text-align: left;
+  margin-left: 1rem;
+  margin-top: 1rem;
+`;
+
+const CardEditDetails = styled.div`
+  text-align: left;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  input {
+    font-size: 1.2rem;
+    width: 100%;
+  }
+  textarea {
+    font-size: 1rem;
+    width: 100%;
+    height: 5rem;
+  }
+`;
+
+const CardActions = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 1.5rem;
+`;
+
+const Button = styled.button`
+  padding: 0.5rem 1rem;
+  border-radius: 0.2rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+`;
 
 const Card = ({ card, onDeleteCard, onEditCard }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -40,9 +83,9 @@ const Card = ({ card, onDeleteCard, onEditCard }) => {
   };
 
   return (
-    <div className="card">
+    <CardView>
       {isEditing ? (
-        <div className="card-details-edit">
+        <CardEditDetails>
           <input
             type="text"
             value={editedTitle}
@@ -50,30 +93,34 @@ const Card = ({ card, onDeleteCard, onEditCard }) => {
             required
           />
           <textarea value={editedDescription} onChange={handleDescriptionChange} />
-          <div className="card-actions">
-            <button className="save-button" onClick={handleSave}>
+          <CardActions>
+            <Button className="save_button" onClick={handleSave}>
               Save
-            </button>
-            <button className="cancel-button" onClick={handleCancel}>
+            </Button>
+            <Button className="cancel_button" onClick={handleCancel}>
               Cancel
-            </button>
-          </div>
-        </div>
+            </Button>
+          </CardActions>
+        </CardEditDetails>
       ) : (
-        <div className="card-details">
-          <h3>{card.title}</h3>
-          <p>{card.description}</p>
-          <div className="card-actions">
-            <button className="edit-button" onClick={handleEdit}>
+        <CardDetails>
+          <h3>
+            {card.title}
+          </h3>
+          <p>
+            {card.description}
+          </p>
+          <CardActions>
+            <Button className="edit_button" onClick={handleEdit}>
               Edit
-            </button>
-            <button className="delete-button" onClick={handleDelete}>
+            </Button>
+            <Button className="delete_button" onClick={handleDelete}>
               Delete
-            </button>
-          </div>
-        </div>
+            </Button>
+          </CardActions>
+        </CardDetails>
       )}
-    </div>
+    </CardView>
   );
 };
 

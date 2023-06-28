@@ -1,4 +1,12 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
+
+const SearchBarInput = styled.input`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  flex-direction: column;
+`;
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -9,7 +17,7 @@ const SearchBar = () => {
   };
 
   return (
-    <input
+    <SearchBarInput
       type="text"
       placeholder="Search"
       value={searchTerm}
