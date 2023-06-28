@@ -69,10 +69,6 @@ const SpaceFiller = styled.div`
   margin-bottom: 1rem;
 `;
 
-const Li = styled.li`
-  list-style: none;
-`;
-
 const Board = () => {
     const [cards, setCards] = useState([[], [], []]);
 
@@ -183,7 +179,7 @@ const Board = () => {
                                         .map((card, index) => (
                                             <Draggable key={card.id} draggableId={card.id} index={index}>
                                                 {(provided) => (
-                                                    <Li
+                                                    <div
                                                         ref={provided.innerRef}
                                                         key={card.id}
                                                         {...provided.draggableProps}
@@ -194,7 +190,7 @@ const Board = () => {
                                                             onDeleteCard={handleDeleteCard}
                                                             onEditCard={handleEditCard}
                                                         />
-                                                    </Li>
+                                                    </div>
                                                 )}
                                             </Draggable>
                                         ))}
@@ -214,7 +210,7 @@ const Board = () => {
                                         .map((card, index) => (
                                             <Draggable key={card.id} draggableId={card.id} index={index}>
                                                 {(provided) => (
-                                                    <Li
+                                                    <div
                                                         ref={provided.innerRef}
                                                         key={card.id}
                                                         {...provided.draggableProps}
@@ -225,7 +221,7 @@ const Board = () => {
                                                             onDeleteCard={handleDeleteCard}
                                                             onEditCard={handleEditCard}
                                                         />
-                                                    </Li>
+                                                    </div>
                                                 )}
                                             </Draggable>
                                         ))}
@@ -245,7 +241,7 @@ const Board = () => {
                                         .map((card, index) => (
                                             <Draggable key={card.id} draggableId={card.id} index={index}>
                                                 {(provided) => (
-                                                    <Li
+                                                    <div
                                                         ref={provided.innerRef}
                                                         key={card.id}
                                                         {...provided.draggableProps}
@@ -256,7 +252,7 @@ const Board = () => {
                                                             onDeleteCard={handleDeleteCard}
                                                             onEditCard={handleEditCard}
                                                         />
-                                                    </Li>
+                                                    </div>
                                                 )}
                                             </Draggable>
                                         ))}

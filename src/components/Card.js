@@ -5,17 +5,18 @@ const CardView = styled.div`
   background-color: #ffffff;
   padding: 1rem;
   margin-bottom: 1rem;
+  border-radius: 0.2rem;
+  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+  margin-left: -2.3rem;
 `;
 
 const CardDetails = styled.div`
   text-align: left;
-  margin-left: 1rem;
   margin-top: 1rem;
 `;
 
 const CardEditDetails = styled.div`
   text-align: left;
-  margin-left: 1rem;
   margin-top: 1rem;
   input {
     font-size: 1.2rem;
