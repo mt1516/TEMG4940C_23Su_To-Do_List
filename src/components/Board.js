@@ -147,11 +147,21 @@ const Board = () => {
             setCards(cards);
         } else {
             // Filter the cards based on the search term and update the UI
-            const filteredCards = cards.filter(
+            const flattenedCards = cards.reduce((accumulator, column) => {
+                return [...accumulator, ...column];
+              }, []);
+            
+            const filteredCards = flattenedCards.filter(
                 (card) =>
                     card.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                     card.description.toLowerCase().includes(searchTerm.toLowerCase())
             );
+
+            const groupedCards = [[], [], []];
+            filteredCards.forEach((card, index) => {
+                groupedCards[index % 3].push(card);
+            });
+
             setCards(filteredCards);
         }
     };

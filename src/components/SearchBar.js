@@ -6,14 +6,16 @@ const SearchBarInput = styled.input`
   flex-wrap: wrap;
   justify-content: space-between;
   flex-direction: column;
+  font-size: 1.2rem;
 `;
 
-const SearchBar = () => {
+const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const handleChange = (e) => {
-    setSearchTerm(e.target.value);
-    // Handle search term change and filter the cards based on the search term
+  const handleChange = (event) => {
+    const newSearchTerm = event.target.value;
+    setSearchTerm(newSearchTerm);
+    onSearch(newSearchTerm);
   };
 
   return (
