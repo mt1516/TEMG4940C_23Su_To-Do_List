@@ -108,7 +108,15 @@ const Board = () => {
         });
         setCards(newCards);
         handleStoreCards(newCards);
-        setDisplayedCards(newCards);
+        // if isSearching is true, we need to show only the updated card and already displaying cards
+        if (isSearching) {
+            const newDisplayedCards = displayedCards.map((column) => {
+                return column.map((card) => {return card.id === editedCard.id ? editedCard : card});
+            });
+            setDisplayedCards(newDisplayedCards);
+        } else {
+            setDisplayedCards(newCards);
+        }
     };
 
     // Function to handle card movement
