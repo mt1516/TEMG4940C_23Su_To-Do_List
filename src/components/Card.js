@@ -5,7 +5,7 @@ const CardView = styled.div`
   background-color: #ffffff;
   padding: 1rem;
   margin-bottom: 1rem;
-  border-radius: 0.2rem;
+  border-radius: 0.8rem;
   box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
   margin-left: -2.3rem;
 `;
@@ -13,6 +13,10 @@ const CardView = styled.div`
 const CardDetails = styled.div`
   text-align: left;
   margin-top: 1rem;
+`;
+
+const CardContent = styled.div`
+  margin-top: -1.4rem;
 `;
 
 const CardEditDetails = styled.div`
@@ -37,7 +41,7 @@ const CardActions = styled.div`
 
 const Button = styled.button`
   padding: 0.5rem 1rem;
-  border-radius: 0.2rem;
+  border-radius: 0.3rem;
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -105,12 +109,14 @@ const Card = ({ card, onDeleteCard, onEditCard }) => {
         </CardEditDetails>
       ) : (
         <CardDetails>
-          <h3>
-            {card.title}
-          </h3>
-          <p>
-            {card.description}
-          </p>
+          <CardContent>
+            <h3>
+              {card.title}
+            </h3>
+            <p>
+              {card.description}
+            </p>
+          </CardContent>
           <CardActions>
             <Button className="edit_button" onClick={handleEdit}>
               Edit

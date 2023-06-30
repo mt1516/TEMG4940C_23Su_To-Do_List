@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Card from './Card';
@@ -70,21 +70,37 @@ const SpaceFiller = styled.div`
 `;
 
 const Board = () => {
+
     const [cards, setCards] = useState([[], [], []]);
+    const [displayedCards, setDisplayedCards] = useState([[], [], []]);
+    const [isSearching, setIsSearching] = useState(false);
 
     // Function to handle card creation
     const handleCreateCard = (newCard) => {
-        setCards([[...cards[0], newCard], cards[1], cards[2]]);
+        const newCards = [[...cards[0], newCard], cards[1], cards[2]]
+        setCards(newCards);
+        handleStoreCards();
+        setDisplayedCards(newCards);
     };
 
     // Function to handle card deletion
     const handleDeleteCard = (cardId) => {
-        setCards(cards.filter((card) => card.id !== cardId));
+        const newCards = cards.map((column) => {
+            return column.filter((card) => card.id !== cardId);
+        });
+        setCards(newCards);
+        handleStoreCards();
+        setDisplayedCards(newCards);
     };
 
     // Function to handle card editing
     const handleEditCard = (editedCard) => {
-        setCards(cards.map((card) => (card.id === editedCard.id ? editedCard : card)));
+        const newCards = cards.map((column) => {
+            return column.map((card) => {return card.id === editedCard.id ? editedCard : card});
+        });
+        setCards(newCards);
+        handleStoreCards();
+        setDisplayedCards(newCards);
     };
 
     // Function to handle card movement
@@ -138,32 +154,34 @@ const Board = () => {
                 setCards([cards[0], cards[1], sourceCards]);
             }
         }
+        handleStoreCards();
+        setDisplayedCards(cards);
     };
 
     // Function to handle card search
     const handleSearch = (searchTerm) => {
         if (searchTerm.trim() === '') {
-            // If the search term is empty, display all cards
-            setCards(cards);
+            setDisplayedCards(cards);
+            setIsSearching(false);
         } else {
-            // Filter the cards based on the search term and update the UI
-            const flattenedCards = cards.reduce((accumulator, column) => {
-                return [...accumulator, ...column];
-              }, []);
-            
-            const filteredCards = flattenedCards.filter(
-                (card) =>
-                    card.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    card.description.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-
-            const groupedCards = [[], [], []];
-            filteredCards.forEach((card, index) => {
-                groupedCards[index % 3].push(card);
-            });
-
-            setCards(filteredCards);
+            setIsSearching(true);
+            var newCards = []
+            for (let i = 0; i < cards.length; i++){
+                const filteredCards = cards[i].filter(
+                    (card) =>
+                        card.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        card.description.toLowerCase().includes(searchTerm.toLowerCase())
+                );
+                newCards.push(filteredCards)
+            }
+            setDisplayedCards(newCards);
         }
+    };
+
+    // Function to store cards in local storage
+    const handleStoreCards = () => {
+        localStorage.setItem('cards', JSON.stringify(cards));
+        console.log(localStorage.getItem('cards'));
     };
 
     return (
@@ -181,11 +199,11 @@ const Board = () => {
                             To Do
                         </TitleTodo>
                         <SpaceFiller></SpaceFiller>
-                        <CardForm onCreateCard={handleCreateCard} />
+                        {!isSearching && <CardForm onCreateCard={handleCreateCard} />}
                         <Droppable droppableId="todo">
                             {(provided) => (
                                 <ul {...provided.droppableProps} ref={provided.innerRef}>
-                                    {cards[0]
+                                    {displayedCards[0]
                                         .map((card, index) => (
                                             <Draggable key={card.id} draggableId={card.id} index={index}>
                                                 {(provided) => (
@@ -216,7 +234,7 @@ const Board = () => {
                         <Droppable droppableId="inProgress">
                             {(provided) => (
                                 <ul {...provided.droppableProps} ref={provided.innerRef}>
-                                    {cards[1]
+                                    {displayedCards[1]
                                         .map((card, index) => (
                                             <Draggable key={card.id} draggableId={card.id} index={index}>
                                                 {(provided) => (
@@ -247,7 +265,7 @@ const Board = () => {
                         <Droppable droppableId="archived">
                             {(provided) => (
                                 <ul {...provided.droppableProps} ref={provided.innerRef}>
-                                    {cards[2]
+                                    {displayedCards[2]
                                         .map((card, index) => (
                                             <Draggable key={card.id} draggableId={card.id} index={index}>
                                                 {(provided) => (
