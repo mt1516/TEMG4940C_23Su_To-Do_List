@@ -76,7 +76,7 @@ const Board = () => {
     const [displayedCards, setDisplayedCards] = useState([[], [], []]);
 
     if (localStorage.getItem('cards') !== null) {
-        if (!isSearching && displayedCards[0].length === 0 && displayedCards[1].length === 0 && displayedCards[2].length === 0) {
+        if (!isSearching && displayedCards[0].length === 0 && displayedCards[1].length === 0 && displayedCards[2].length === 0 && cards[0].length !== 0 && cards[1].length !== 0 && cards[2].length !== 0) {
             setCards(JSON.parse(localStorage.getItem('cards')));
             setDisplayedCards(JSON.parse(localStorage.getItem('cards')));
         }
@@ -96,9 +96,15 @@ const Board = () => {
         const newCards = cards.map((column) => {
             return column.filter((card) => card.id !== cardId);
         });
-        setCards(newCards);
-        handleStoreCards(newCards);
-        setDisplayedCards(newCards);
+        if (newCards[0].length === 0 && newCards[1].length === 0 && newCards[2].length === 0) {
+            setCards([[], [], []]);
+            handleStoreCards([[], [], []]);
+            setDisplayedCards([[], [], []]);
+        } else {
+            setCards(newCards);
+            handleStoreCards(newCards);
+            setDisplayedCards(newCards);
+        }
     };
 
     // Function to handle card editing
