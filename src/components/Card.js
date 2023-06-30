@@ -25,11 +25,13 @@ const CardEditDetails = styled.div`
   input {
     font-size: 1.2rem;
     width: 100%;
+    margin-bottom: 0.5rem;
   }
   textarea {
     font-size: 1rem;
     width: 100%;
     height: 5rem;
+    resize: vertical;
   }
 `;
 
@@ -97,7 +99,10 @@ const Card = ({ card, onDeleteCard, onEditCard }) => {
             onChange={handleTitleChange}
             required
           />
-          <textarea value={editedDescription} onChange={handleDescriptionChange} />
+          <textarea
+            value={editedDescription}
+            onChange={handleDescriptionChange}
+          />
           <CardActions>
             <Button className="save_button" onClick={handleSave}>
               Save

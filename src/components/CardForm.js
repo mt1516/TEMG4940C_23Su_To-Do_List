@@ -13,6 +13,7 @@ const Input = styled.input`
 
 const TextArea = styled.textarea`
   margin-bottom: 0.5rem;
+  resize: vertical;
 `;
 
 const Button = styled.button`
