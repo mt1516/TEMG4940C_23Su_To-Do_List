@@ -184,9 +184,9 @@ const Board = () => {
             setIsSearching(false);
         } else {
             setIsSearching(true);
-            var newCards = []
-            for (let i = 0; i < cards.length; i++){
-                const filteredCards = cards[i].filter(
+            const newCards = []
+            for (const element of cards){
+                const filteredCards = element.filter(
                     (card) =>
                         card.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                         card.description.toLowerCase().includes(searchTerm.toLowerCase())
