@@ -181,7 +181,6 @@ const Board = () => {
     // Function to store cards in local storage
     const handleStoreCards = () => {
         localStorage.setItem('cards', JSON.stringify(cards));
-        console.log(localStorage.getItem('cards'));
     };
 
     return (
