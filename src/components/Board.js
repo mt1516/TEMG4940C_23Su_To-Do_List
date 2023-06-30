@@ -71,15 +71,23 @@ const SpaceFiller = styled.div`
 
 const Board = () => {
 
+    const [isSearching, setIsSearching] = useState(false);
     const [cards, setCards] = useState([[], [], []]);
     const [displayedCards, setDisplayedCards] = useState([[], [], []]);
-    const [isSearching, setIsSearching] = useState(false);
+
+    if (localStorage.getItem('cards') !== null) {
+        if (!isSearching && displayedCards[0].length === 0 && displayedCards[1].length === 0 && displayedCards[2].length === 0) {
+            setCards(JSON.parse(localStorage.getItem('cards')));
+            setDisplayedCards(JSON.parse(localStorage.getItem('cards')));
+        }
+    }
+
 
     // Function to handle card creation
     const handleCreateCard = (newCard) => {
         const newCards = [[...cards[0], newCard], cards[1], cards[2]]
         setCards(newCards);
-        handleStoreCards();
+        handleStoreCards(newCards);
         setDisplayedCards(newCards);
     };
 
@@ -89,7 +97,7 @@ const Board = () => {
             return column.filter((card) => card.id !== cardId);
         });
         setCards(newCards);
-        handleStoreCards();
+        handleStoreCards(newCards);
         setDisplayedCards(newCards);
     };
 
@@ -99,7 +107,7 @@ const Board = () => {
             return column.map((card) => {return card.id === editedCard.id ? editedCard : card});
         });
         setCards(newCards);
-        handleStoreCards();
+        handleStoreCards(newCards);
         setDisplayedCards(newCards);
     };
 
@@ -154,7 +162,7 @@ const Board = () => {
                 setCards([cards[0], cards[1], sourceCards]);
             }
         }
-        handleStoreCards();
+        handleStoreCards(cards);
         setDisplayedCards(cards);
     };
 
@@ -179,8 +187,8 @@ const Board = () => {
     };
 
     // Function to store cards in local storage
-    const handleStoreCards = () => {
-        localStorage.setItem('cards', JSON.stringify(cards));
+    const handleStoreCards = (cardsToStore) => {
+        localStorage.setItem('cards', JSON.stringify(cardsToStore));
     };
 
     return (
@@ -204,7 +212,12 @@ const Board = () => {
                                 <ul {...provided.droppableProps} ref={provided.innerRef}>
                                     {displayedCards[0]
                                         .map((card, index) => (
-                                            <Draggable key={card.id} draggableId={card.id} index={index}>
+                                            <Draggable
+                                                key={card.id}
+                                                draggableId={card.id}
+                                                index={index}
+                                                isDragDisabled={isSearching}
+                                                >
                                                 {(provided) => (
                                                     <div
                                                         ref={provided.innerRef}
@@ -235,7 +248,12 @@ const Board = () => {
                                 <ul {...provided.droppableProps} ref={provided.innerRef}>
                                     {displayedCards[1]
                                         .map((card, index) => (
-                                            <Draggable key={card.id} draggableId={card.id} index={index}>
+                                            <Draggable
+                                                key={card.id}
+                                                draggableId={card.id}
+                                                index={index}
+                                                isDragDisabled={isSearching}
+                                                >
                                                 {(provided) => (
                                                     <div
                                                         ref={provided.innerRef}
@@ -266,7 +284,12 @@ const Board = () => {
                                 <ul {...provided.droppableProps} ref={provided.innerRef}>
                                     {displayedCards[2]
                                         .map((card, index) => (
-                                            <Draggable key={card.id} draggableId={card.id} index={index}>
+                                            <Draggable
+                                                key={card.id}
+                                                draggableId={card.id}
+                                                index={index}
+                                                isDragDisabled={isSearching}
+                                                >
                                                 {(provided) => (
                                                     <div
                                                         ref={provided.innerRef}
